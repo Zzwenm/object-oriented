@@ -9,42 +9,42 @@ using namespace std;
 // 随机符号
 char creat_symbol()
 {
-	int n = rand()%4;
-	char sym;
-	switch(n)
-	{
-		case 0: sym='+';break;
-		case 1: sym='-';break;
-		case 2: sym='*';break;
-		case 3: sym='/';break;
-	}
+    int n = rand()%4;
+    char sym;
+    switch(n)
+    {
+        case 0: sym='+';break;
+        case 1: sym='-';break;
+        case 2: sym='*';break;
+        case 3: sym='/';break;
+    }
 return sym;
 }
 
 // 随机括号
 string bracket(string n)
 {
-	int random=rand()%2;
-	if (random==1)
-	{
-		n='('+n+')';
-	}
+    int random=rand()%2;
+    if (random==1)
+    {
+        n='('+n+')';
+    }
 return n; 
 }
 
 // 数字转字符串
 string int_str(int number)
 {
-	char str[1];
-	itoa(number,str,10);
-	string i_s = str;
+    char str[1];
+    itoa(number,str,10);
+    string i_s = str;
 return i_s;
 }
 
 // 连接数字运算符
 string connect(string str1,string str2,char a)
 {
-	string equ = str1+a+str2;
+    string equ = str1+a+str2;
 return equ;
 }
 
@@ -187,38 +187,48 @@ float expressionCalculate(string s)
 
 int main()
 {
-	srand(unsigned(time(0)));
-	int count,i,j,n1,n2,exchange;
-	string str_n1,str_n2,equation,temp;
-	char symbol;
-	cout<<"输入生成题目数量:";
-	cin>>count;
-	for (i = 0; i < count; i++)
-	{
-		n1=rand()%11;
-		n2=rand()%11;
-		symbol=creat_symbol();
-		str_n1=int_str(n1);
-		str_n2=int_str(n2);
-		equation=connect(str_n1,str_n2,symbol);
-		for (j = 0; j < 2; j++)
-		{			
-			str_n1=equation;
-			str_n1=bracket(equation);
-			n2=rand()%11;
-			str_n2=int_str(n2);
-			exchange=rand()%2;
-			if (exchange==1)
-			{
-				temp=str_n1;
-				str_n1=str_n2;
-				str_n2=temp;
-			}
-			symbol=creat_symbol();
-			equation=connect(str_n1,str_n2,symbol);
-		}
-		cout<<equation<<"="<<endl;
-	}
+    srand(unsigned(time(0)));
+    int count,i,j,n1,n2,exchange;
+    string str_n1,str_n2,temp;
+    char symbol;
+    cout<<"输入生成题目数量:";
+    cin>>count;
+    string equation[count];
+    float *answer = new float[count];
+    float *input = new float[count];
+    for (i = 0; i < count; i++)
+    {
+        n1=rand()%11;
+        n2=rand()%11;
+        symbol=creat_symbol();
+        str_n1=int_str(n1);
+        str_n2=int_str(n2);
+        equation[i]=connect(str_n1,str_n2,symbol);
+        for (j = 0; j < 2; j++)
+        {           
+            str_n1=equation[i];
+            str_n1=bracket(equation[i]);
+            n2=rand()%11;
+            str_n2=int_str(n2);
+            // 对字符串位置进行随机交换
+            exchange=rand()%2;
+            if (exchange==1)
+            {
+                temp=str_n1;
+                str_n1=str_n2;
+                str_n2=temp;
+            }
+            symbol=creat_symbol();
+            equation[i]=connect(str_n1,str_n2,symbol);
+        }
+        cout<<equation[i]<<'=';
+        cin>>input[i];
+        answer[i]=expressionCalculate(equation[i]);
+    }
+
+
+    delete [] answer;
+    delete [] input;
 return 0;
 }
 
