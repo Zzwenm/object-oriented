@@ -1,0 +1,12 @@
+using namespace std;
+int readfile(string infilepath);
+void print(int t, int f);
+float record(int answer, int input);
+float calculateResult(string s);
+float posfixCompute(string s);
+string InfixToPostfix(string infix);
+string connect(string str1, string str2, char a);
+string int_str(int number);
+string bracket(string n);
+char randomOperation();
+void writeFile(int t, int f);
